@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kids Learning App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="card">
+        <!-- 🔹 CHANGE TITLE HERE -->
+        <h1>🎒 Fun Learning Time 🎨</h1>
+
+        <!-- 🔹 CHANGE DESCRIPTION HERE -->
+        <p>
+            Enter how many hours you studied 📚  
+            and see your marks prediction 🎯
+        </p>
+
+        <!-- 🔹 INPUT -->
+        <input type="number" id="hours" placeholder="Study Hours ⏰">
+
+        <!-- 🔹 BUTTON TEXT -->
+        <button onclick="predict()">✨ Predict Marks ✨</button>
+
+        <!-- 🔹 RESULT TEXT -->
+        <h2 id="result"></h2>
+    </div>
+
+    <script>
+        function predict() {
+            let hours = document.getElementById("hours").value;
+
+            fetch("/predict", {
+                method: "POST",
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: "hours=" + hours
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("result").innerText =
+                    "🎉 Your Predicted Marks: " + data.predicted_marks;
+            });
+        }
+    </script>
+
+</body>
+</html>
